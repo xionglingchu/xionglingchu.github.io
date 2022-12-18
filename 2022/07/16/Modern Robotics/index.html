@@ -1,0 +1,180 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Modern Robotics | Anita's Blog</title><meta name="keywords" content="Tech"><meta name="author" content="Anita Xiong"><meta name="copyright" content="Anita Xiong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="1、构形空间 （Configuration Space，C-Space）1.1 自由度 degree of freedom (DOF)对于一个能旋转的物体来讲，有6个自由度（3个坐标轴方向的平移+3个坐标轴的旋转）；对于一个不能旋转的物体来讲，有3个自由度。  1.2 拓扑 topology （形状）如果两个表面能够连续从一种形状变化到另一种形状，而不经过切割和粘结等方式，我们称他们为拓扑等效 的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Modern Robotics">
+<meta property="og:url" content="http://xionglingchu.github.io/2022/07/16/Modern%20Robotics/index.html">
+<meta property="og:site_name" content="Anita&#39;s Blog">
+<meta property="og:description" content="1、构形空间 （Configuration Space，C-Space）1.1 自由度 degree of freedom (DOF)对于一个能旋转的物体来讲，有6个自由度（3个坐标轴方向的平移+3个坐标轴的旋转）；对于一个不能旋转的物体来讲，有3个自由度。  1.2 拓扑 topology （形状）如果两个表面能够连续从一种形状变化到另一种形状，而不经过切割和粘结等方式，我们称他们为拓扑等效 的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xionglingchu.github.io/img/sdv/mr.jpg">
+<meta property="article:published_time" content="2022-07-15T16:01:48.000Z">
+<meta property="article:modified_time" content="2022-07-26T13:36:21.894Z">
+<meta property="article:author" content="Anita Xiong">
+<meta property="article:tag" content="Tech">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xionglingchu.github.io/img/sdv/mr.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://xionglingchu.github.io/2022/07/16/Modern%20Robotics/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Modern Robotics',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-07-26 21:36:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/sdv/mr.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Anita's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Modern Robotics</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-15T16:01:48.000Z" title="发表于 2022-07-16 00:01:48">2022-07-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-07-26T13:36:21.894Z" title="更新于 2022-07-26 21:36:21">2022-07-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Foundation/">Foundation</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Modern Robotics"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="1、构形空间-（Configuration-Space，C-Space）"><a href="#1、构形空间-（Configuration-Space，C-Space）" class="headerlink" title="1、构形空间 （Configuration Space，C-Space）"></a>1、构形空间 （Configuration Space，C-Space）</h2><h3 id="1-1-自由度-degree-of-freedom-DOF"><a href="#1-1-自由度-degree-of-freedom-DOF" class="headerlink" title="1.1 自由度 degree of freedom (DOF)"></a>1.1 自由度 degree of freedom (DOF)</h3><p>对于一个能旋转的物体来讲，有6个自由度（3个坐标轴方向的平移+3个坐标轴的旋转）；对于一个不能旋转的物体来讲，有3个自由度。</p>
+<p><img src="https://xionglingchu.github.io/img/sdv/dof.png" alt="doff"></p>
+<h3 id="1-2-拓扑-topology-（形状）"><a href="#1-2-拓扑-topology-（形状）" class="headerlink" title="1.2 拓扑 topology （形状）"></a>1.2 拓扑 topology （形状）</h3><p>如果两个表面能够连续从一种形状变化到另一种形状，而不经过切割和粘结等方式，我们称他们为拓扑等效 的。</p>
+<p>在二维面中，球面（球是三维的，球面是二维的（可由经度与纬度表示））若想变为一个平面，则需要进行切割，故其不是拓扑等效。</p>
+<p><img src="https://xionglingchu.github.io/img/sdv/topo.png" alt="toff"></p>
+<h2 id="2、物体姿态的表达方法：平移和旋转"><a href="#2、物体姿态的表达方法：平移和旋转" class="headerlink" title="2、物体姿态的表达方法：平移和旋转"></a>2、物体姿态的表达方法：平移和旋转</h2><p>意义：</p>
+<p>1）对于刚体的运动，除了旋转外还有平移。在机器人及自动驾驶中，经常用齐次变换矩阵将旋转和平移进行统一。 </p>
+<p>2）齐次变换矩阵，可以描述一个坐标系在另一个坐标系下的位置和姿态，同时可以计算一个坐标系上任一点在另一个坐标系下的位置。</p>
+<h2 id="3、运动学方程：连杆坐标系"><a href="#3、运动学方程：连杆坐标系" class="headerlink" title="3、运动学方程：连杆坐标系"></a>3、运动学方程：连杆坐标系</h2><h4 id="3-1-定义与目的"><a href="#3-1-定义与目的" class="headerlink" title="3.1 定义与目的"></a>3.1 定义与目的</h4><p><strong>目的</strong> ：求解一个多连杆机器人（如下图）的末端点P在世界坐标系下的坐标。</p>
+<p><strong>定义</strong>：连杆坐标系是一个个与机器人的连杆固连在一起的坐标系。如果我们在机器人的每一个连杆上都建立一个固连坐标系，并且我们想办法求解每相邻两个连杆之间的坐标系变换关系，就能很容易地将P点坐标映射到世界坐标系了（相对而言相邻两个连杆之间的坐标变换关系是容易求得的）。 </p>
+<p><strong>4个参数可以决定连杆特征：（D-H参数）</strong></p>
+<p>1）ai-1称为连杆长度，表示轴i-1和轴i的公垂线的长度。</p>
+<p>2）αi-1称为连杆转角</p>
+<p>3）di称为连杆偏距，表示公垂线ai-1和公垂线ai沿公共轴线关节轴i方向的距离。（当关节为移动关节时，di为关节变量）</p>
+<p>4）θi称为关节角，表示公垂线ai-1的延长线和公垂线ai绕公共轴线关节轴i旋转的夹角。（当关节为转动关节时，θi为关节变量。）</p>
+<h4 id="3-2-求解步骤"><a href="#3-2-求解步骤" class="headerlink" title="3.2 求解步骤"></a>3.2 求解步骤</h4><ul>
+<li><p>第0步：为了研究机器人连杆之间的位置关系，首先需要在机器人的每个连杆上分别建立一个连杆坐标系，然后描述这些连杆坐标系之间的关系。通常从机器人的固定基座开始对连杆进行编号，固定基座可记为连杆0，第一个可动连杆为连杆1，以此类推，机器人末端的连杆为连杆n。相应地，与连杆n固连的坐标系记为坐标系{N}。</p>
+</li>
+<li><p>第1步：根据坐标系的建立步骤和D-H参数，推导机器人坐标系{i}相对于坐标系{i-1}的齐次变换矩阵</p>
+</li>
+<li><p>第2步：在定义了连杆坐标系和相应的连杆参数后，可以建立机器人的运动学方程。首先根据连杆参数得到各个连杆变换矩阵，再把这些连杆变换矩阵连乘就可以计算出坐标系{N}相对于坐标系{0}的变换矩</p>
+</li>
+</ul>
+<p><img src="https://xionglingchu.github.io/img/sdv/lg.png" alt="lgcase"></p>
+<h4 id="3-3-工业应用方法"><a href="#3-3-工业应用方法" class="headerlink" title="3.3 工业应用方法"></a>3.3 工业应用方法</h4><p>采用美国MathWorks公司出品的Matlab软件，编写了RS10N型六自由度工业机器人正运动学的完整求解实例，利用此程序可以依据工业机器人各关节角求解其末端位姿。</p>
+<h2 id="资料来源："><a href="#资料来源：" class="headerlink" title="资料来源："></a>资料来源：</h2><p>Modern Robotics:  Mechanics, Planning, and Control,by Kevin Lynch and Frank Park, Cambridge University Press 2017</p>
+<ol>
+<li>课程视频：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=FyLNR3edOds&amp;list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&amp;index=6">https://www.youtube.com/watch?v=FyLNR3edOds&amp;list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&amp;index=6</a></li>
+<li>齐次变换矩阵：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/116014583">https://zhuanlan.zhihu.com/p/116014583</a></li>
+<li>《机器人学基础》，蒋志宏，北京理工大学</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Anita Xiong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://xionglingchu.github.io/2022/07/16/Modern%20Robotics/">http://xionglingchu.github.io/2022/07/16/Modern%20Robotics/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://xionglingchu.github.io" target="_blank">Anita's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Tech/">Tech</a></div><div class="post_share"><div class="social-share" data-image="/img/sdv/mr.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/05/26/Robotruck/"><img class="prev-cover" src="/img/sdv/rst.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">干线物流研究</div></div></a></div><div class="next-post pull-right"><a href="/2022/07/26/1st%20Journey%20in%202022/"><img class="next-cover" src="/img/sdv/wh.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">1st journey in 2022</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/08/01/1%E3%80%81%E8%B6%85%E5%A3%B0%E6%B3%A2%E4%BC%A0%E6%84%9F%E5%99%A8%20%EF%BC%88USS%EF%BC%8CUltraSonic%20Sensor%EF%BC%89/" title="Sensors"><img class="cover" src="/img/sdv/ska.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-01</div><div class="title">Sensors</div></div></a></div><div><a href="/2022/05/20/AV%20Roadmap/" title="Autonomous Vechicle Roadmap"><img class="cover" src="/img/sdv/atop.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-20</div><div class="title">Autonomous Vechicle Roadmap</div></div></a></div><div><a href="/2022/07/27/Middleware/" title="Middleware"><img class="cover" src="/img/sdv/as.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-27</div><div class="title">Middleware</div></div></a></div><div><a href="/2022/07/27/Physics/" title="大学物理"><img class="cover" src="/img/sdv/phy.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-27</div><div class="title">大学物理</div></div></a></div><div><a href="/2022/05/26/Robotruck/" title="干线物流研究"><img class="cover" src="/img/sdv/rst.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-26</div><div class="title">干线物流研究</div></div></a></div><div><a href="/2022/04/20/Tesla%E7%9A%84%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E6%8A%80%E6%9C%AF%E8%B7%AF%E7%BA%BF/" title="Tesla 的技术路线"><img class="cover" src="/img/sdv/rst.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-20</div><div class="title">Tesla 的技术路线</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E6%9E%84%E5%BD%A2%E7%A9%BA%E9%97%B4-%EF%BC%88Configuration-Space%EF%BC%8CC-Space%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">1、构形空间 （Configuration Space，C-Space）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%87%AA%E7%94%B1%E5%BA%A6-degree-of-freedom-DOF"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 自由度 degree of freedom (DOF)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%8B%93%E6%89%91-topology-%EF%BC%88%E5%BD%A2%E7%8A%B6%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 拓扑 topology （形状）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E7%89%A9%E4%BD%93%E5%A7%BF%E6%80%81%E7%9A%84%E8%A1%A8%E8%BE%BE%E6%96%B9%E6%B3%95%EF%BC%9A%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC"><span class="toc-number">2.</span> <span class="toc-text">2、物体姿态的表达方法：平移和旋转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%96%B9%E7%A8%8B%EF%BC%9A%E8%BF%9E%E6%9D%86%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="toc-number">3.</span> <span class="toc-text">3、运动学方程：连杆坐标系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%9B%AE%E7%9A%84"><span class="toc-number">3.0.1.</span> <span class="toc-text">3.1 定义与目的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E6%B1%82%E8%A7%A3%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.0.2.</span> <span class="toc-text">3.2 求解步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E5%B7%A5%E4%B8%9A%E5%BA%94%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">3.0.3.</span> <span class="toc-text">3.3 工业应用方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99%E6%9D%A5%E6%BA%90%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">资料来源：</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By Anita Xiong</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">To be or Not to be, that is a question!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.css"><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
